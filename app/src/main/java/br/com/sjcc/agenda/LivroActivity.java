@@ -2,6 +2,7 @@ package br.com.sjcc.agenda;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +22,7 @@ public class LivroActivity extends AppCompatActivity {
     private LivroAdapter mLivroAdapter;
     private ArrayList<Livro> livros;
     private RecyclerView recyclerView;
-    static final int PICK_CONTACT_REQUEST = 1;
+    static final int FORMULARIO_LIVRO_REQUEST = 1;
     private int idx;
 
     @Override
@@ -55,20 +56,29 @@ public class LivroActivity extends AppCompatActivity {
                 idx = position;
                 Intent intentFormularioLivro = new Intent(LivroActivity.this, FormularioLivroActivity.class);
                 intentFormularioLivro.putExtra("livro", livros.get(position));
-                startActivityForResult(intentFormularioLivro, PICK_CONTACT_REQUEST);
+                startActivityForResult(intentFormularioLivro, FORMULARIO_LIVRO_REQUEST);
             }
             @Override
             public void onLongClick(View view, int position) {
                 Toast.makeText(getApplicationContext(), "Long selected!", Toast.LENGTH_SHORT).show();
             }
         }));
+
+        FloatingActionButton btnAdicionar = (FloatingActionButton) findViewById(R.id.botao_adicionar_livro);
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentFormularioLivro = new Intent(LivroActivity.this, FormularioLivroActivity.class);
+                startActivity(intentFormularioLivro);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
-        if (requestCode == PICK_CONTACT_REQUEST) {
+        if (requestCode == FORMULARIO_LIVRO_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Livro livroSelecionado = (Livro) data.getParcelableExtra("LIVRO");
                 livros.set(idx, livroSelecionado);

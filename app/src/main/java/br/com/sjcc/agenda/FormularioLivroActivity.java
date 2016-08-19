@@ -34,18 +34,18 @@ public class FormularioLivroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_livro);
 
-         mLivro = (Livro) getIntent().getParcelableExtra("livro");
-
         helper = new FormularioLivroHelper(this);
 
-        TextView nAutor = (TextView) findViewById(R.id.livro_autor);
-        TextView nLivro = (TextView) findViewById(R.id.livro_nome);
-        RatingBar nNota = (RatingBar) findViewById(R.id.livro_avaliacao);
+        mLivro = (Livro) getIntent().getParcelableExtra("livro");
+        if (mLivro!=null) {
+            TextView nAutor = (TextView) findViewById(R.id.livro_autor);
+            TextView nLivro = (TextView) findViewById(R.id.livro_nome);
+            RatingBar nNota = (RatingBar) findViewById(R.id.livro_avaliacao);
 
-        nAutor.setText(mLivro.getNomeAutor());
-        nLivro.setText(mLivro.getNomeLivro());
-        nNota.setRating(mLivro.getNota());
-
+            nAutor.setText(mLivro.getNomeAutor());
+            nLivro.setText(mLivro.getNomeLivro());
+            nNota.setRating(mLivro.getNota());
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -76,45 +76,5 @@ public class FormularioLivroActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "FormularioLivro Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://br.com.sjcc.agenda/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "FormularioLivro Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://br.com.sjcc.agenda/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 }
